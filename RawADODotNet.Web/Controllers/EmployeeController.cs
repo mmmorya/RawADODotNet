@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project.InfraStructure.Contracts.Business;
+using Project.InfraStructure.Models.RequestModel;
 using RawADODotNet.Web.ViewModel;
 
 namespace RawADODotNet.Web.Controllers
@@ -11,9 +12,21 @@ namespace RawADODotNet.Web.Controllers
         {
             _employeeManager = employeeManager;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page, string searchTerm, int pageSize = 10)
         {
-            var result = _employeeManager.Get();
+            var result = _employeeManager.Get(new CommonRequestModel() { 
+                PageNumber = page == 0 ? 1 : page,
+                PageSize = pageSize,
+                SearchTerm = searchTerm
+            });
+            #region ViewBags
+            ViewBag.CurrentPage = page == 0 ? 1 : page;
+            ViewBag.TotalItemCount = result.TotalRecords;
+            ViewBag.PageCount = (int)Math.Ceiling((double)result.TotalRecords / pageSize);
+            ViewBag.SearchTerm = searchTerm;
+            ViewBag.PageSize = pageSize;
+            #endregion
+
             return View(result.Data);
         }
 
