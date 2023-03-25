@@ -20,39 +20,51 @@ namespace Project.InfraStructure.Repositories.ProcDataLayer
             var response = new ExecResult<IEnumerable<EmployeeDto>>();
             var employeeList = new List<EmployeeDto>();
             SqlParameter[] param = {
-                    new SqlParameter("@Id", request.Id)
+                    new SqlParameter("@RowsOfPage", request.PageSize),
+                    new SqlParameter("@PageNumber", request.PageNumber),
+                    new SqlParameter("@SearchTerm", request.SearchTerm)
             };
             try
             {
-                var dt = _dAL.GetByProcedure(GetName(), param);
-                if (dt.Rows.Count > 0)
+                var ds = _dAL.GetByProcedureAdapterDS(GetName(), param);
+
+                if (ds.Tables.Count > 0)
                 {
-                    response.HasErrors = Convert.ToBoolean(dt.Rows[0][0]);
-
-                    foreach (DataRow dr in dt.Rows)
+                    var dt = ds.Tables[0];
+                    if (dt.Rows.Count > 0)
                     {
-                        employeeList.Add(new EmployeeDto
-                        {
-                            Id = Convert.ToInt32(dr["Id"]),
-                            FirstName = dr["FirstName"].ToString(),
-                            LastName = dr["LastName"].ToString(),
-                            Email = dr["Email"].ToString(),
-                            Address = dr["Address"].ToString(),
-                            Phone = dr["Phone"].ToString(),
-                            DepartmentId = Convert.ToInt32(dr["DepartmentId"]),
-                            MyDepartmentDto = new DepartmentDto()
-                            {
-                                Id = Convert.ToInt32(dr["DepartmentId"]),
-                                DepartmentName = dr["DepartmentName"].ToString()
-                            }
-                        });
-                    }
+                        response.HasErrors = Convert.ToBoolean(dt.Rows[0][0]);
 
-                    response.Data = employeeList;
-                    //if (response.HasErrors)
-                    //    response.Errors = new string[] { dt.Rows[0]["Msg"] is DBNull ? string.Empty : Convert.ToString(dt.Rows[0]["Msg"]) ?? string.Empty };
-                    //else
-                    //    response.Message = dt.Rows[0]["Msg"] is DBNull ? string.Empty : Convert.ToString(dt.Rows[0]["Msg"]) ?? string.Empty;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            employeeList.Add(new EmployeeDto
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                FirstName = dr["FirstName"].ToString(),
+                                LastName = dr["LastName"].ToString(),
+                                Email = dr["Email"].ToString(),
+                                Address = dr["Address"].ToString(),
+                                Phone = dr["Phone"].ToString(),
+                                DepartmentId = Convert.ToInt32(dr["DepartmentId"]),
+                                MyDepartmentDto = new DepartmentDto()
+                                {
+                                    Id = Convert.ToInt32(dr["DepartmentId"]),
+                                    DepartmentName = dr["DepartmentName"].ToString()
+                                }
+                            });
+                        }
+
+                        response.Data = employeeList;
+                        //if (response.HasErrors)
+                        //    response.Errors = new string[] { dt.Rows[0]["Msg"] is DBNull ? string.Empty : Convert.ToString(dt.Rows[0]["Msg"]) ?? string.Empty };
+                        //else
+                        //    response.Message = dt.Rows[0]["Msg"] is DBNull ? string.Empty : Convert.ToString(dt.Rows[0]["Msg"]) ?? string.Empty;
+                    }
+                }
+                if (ds.Tables.Count > 1)
+                {
+                    var dt = ds.Tables[1];
+                    response.TotalRecords = Convert.ToInt32(dt.Rows[0][0]);
                 }
             }
             catch (Exception ex)
