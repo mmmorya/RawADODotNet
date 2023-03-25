@@ -2,6 +2,11 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
 builder.Services
     .ConfigureConnectionString(builder.Configuration)
     .AddCMCustomDependency(builder.Configuration)
