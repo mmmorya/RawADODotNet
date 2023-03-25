@@ -59,7 +59,7 @@ namespace Project.InfraStructure.Repositories.ProcDataLayer
             throw new NotImplementedException();
         }
 
-        public string GetName() => "Proc_GetEmployees";
+        public string GetName() => "Proc_GetEmployeeById";
     }
 }
 

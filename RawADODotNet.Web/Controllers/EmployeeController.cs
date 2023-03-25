@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Project.InfraStructure.Contracts.Business;
 using RawADODotNet.Web.ViewModel;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RawADODotNet.Web.Controllers
 {
@@ -24,6 +18,13 @@ namespace RawADODotNet.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult Detail(int Id)
+        {
+            var result = _employeeManager.Get(Id);
+            return View(result.Data);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -36,7 +37,7 @@ namespace RawADODotNet.Web.Controllers
             {
                 var result = _employeeManager.CreateEmployee(employeeVM.ToDto());
             }
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -51,9 +52,26 @@ namespace RawADODotNet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _employeeManager.CreateEmployee(employeeVM.ToDto());
+                var result = _employeeManager.Edit(employeeVM.ToDto());
             }
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int Id)
+        {
+            var result = _employeeManager.Get(Id);
+            return View(result.Data);
+        }
+
+        [HttpPost("Employee/Delete/{Id}")]
+        public IActionResult DeleteConfirmed(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _employeeManager.Delete(Id);
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

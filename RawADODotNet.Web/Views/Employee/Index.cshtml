@@ -38,7 +38,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">Sr. No.</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
@@ -51,10 +51,11 @@
     <tbody class="table-group-divider">
         @if (Model.Any())
         {
+            int m = 1;
             foreach (var item in Model)
             {
                 <tr>
-                    <th scope="row">#</th>
+                    <th scope="row">@m</th>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
                     <td>@item.Email</td>
@@ -63,10 +64,11 @@
                     <td>@item.MyDepartmentDto.DepartmentName</td>
                     <td class="text-center">
                         <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a> |
-                        <a asp-action="Edit" asp-route-id="@item.Id" >Detail</a> |
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-danger">Remove</a>
+                        <a asp-action="Detail" asp-route-id="@item.Id">Detail</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger">Remove</a>
                     </td>
                 </tr>
+                m++;
             }
         }
         else
