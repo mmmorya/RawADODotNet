@@ -26,12 +26,24 @@ namespace Project.Business.Managers
             return result;
         }
 
+        public ExecResult<EmployeeDto> Get(int id)
+        {
+            var proc = new Proc_GetEmployeeById(_iDAL);
+            var result = (ExecResult<EmployeeDto>)proc.Call(new CommonRequestModel()
+            {
+                Id = id
+            });
+            return result;
+        }
+
         public ExecResult CreateEmployee(EmployeeDto employeeDto)
         {
             var proc = new Proc_InsertEmployee(_iDAL);
 
             return (ExecResult)proc.Call(employeeDto);
         }
+
+
     }
 }
 

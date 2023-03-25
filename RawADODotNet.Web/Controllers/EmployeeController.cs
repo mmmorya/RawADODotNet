@@ -38,6 +38,23 @@ namespace RawADODotNet.Web.Controllers
             }
             return View(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Edit(int Id)
+        {
+            var result = _employeeManager.Get(Id);
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EmployeeVM employeeVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _employeeManager.CreateEmployee(employeeVM.ToDto());
+            }
+            return View(nameof(Index));
+        }
     }
 }
 
