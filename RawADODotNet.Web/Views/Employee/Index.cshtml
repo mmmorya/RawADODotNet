@@ -1,0 +1,79 @@
+﻿@model IEnumerable<EmployeeDto>
+@{
+    ViewData["Title"] = "Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4>Employee Management</h4>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Library</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-11">
+        <div class="row">
+            <div class="col-2">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" placeholder="Second name" aria-label="First name">
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" placeholder="Third names" aria-label="Last name">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-1">
+        <a class="btn btn-primary" asp-controller="Employee" asp-action="Create">Add</a>
+    </div>
+</div>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">DepartmentName</th>
+            <th scope="col" class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @if (Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">#</th>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Address</td>
+                    <td>@item.MyDepartmentDto.DepartmentName</td>
+                    <td class="text-center">
+                        <a href="#">Edit</a> |
+                        <a href="#">Detail</a> |
+                        <a href="#" class="text-danger">Remove</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <th scope="row" colspan="8" class="text-center">No Records Found!</th>
+            </tr>
+        }
+    </tbody>
+</table>
