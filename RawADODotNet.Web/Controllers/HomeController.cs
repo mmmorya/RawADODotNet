@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using RawADODotNet.Web.Extensions.AlertService;
 using RawADODotNet.Web.Models;
 
 namespace RawADODotNet.Web.Controllers;
@@ -15,7 +16,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View().WithSuccess("Success!","This Toast From Controller.");
     }
 
     public IActionResult Privacy()
