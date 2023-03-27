@@ -1,0 +1,20 @@
+﻿@{
+    var type = (string)TempData["_alert.type"];
+    var title = (string)TempData["_alert.title"];
+    var body = (string)TempData["_alert.body"];
+}
+@if (!string.IsNullOrEmpty(type))
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var toastHtml = '<div class="toast text-bg-success border-0" id = "toastAlert" >'
+                + '<div class="d-flex" ><div class="toast-body" >'
+                + '<strong>Success! </strong> This is a success toast. </div>'
+                + '<button type = "button" class="btn-close btn-close-white me-2 m-auto"  data-bs-dismiss="toast"></button></div></div>';
+            $('#toastAlertHTML').html(toastHtml);
+            const toast = new bootstrap.Toast(toastAlert);
+            toast.show();
+        });
+    </script>
+}
