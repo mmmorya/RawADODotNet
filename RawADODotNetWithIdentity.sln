@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DataLayer", "Projec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.InfraStructure", "Project.InfraStructure\Project.InfraStructure.csproj", "{BBB2E167-8537-495A-95E9-9A627E127735}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RawADODotNetWithIdentity.Web", "RawADODotNetWithIdentity.Web\RawADODotNetWithIdentity.Web.csproj", "{04072C8A-C316-4E21-A501-896E32AD17F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RawADODotNet.Web", "RawADODotNetWithIdentity.Web\RawADODotNet.Web.csproj", "{04072C8A-C316-4E21-A501-896E32AD17F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
