@@ -6,7 +6,6 @@ namespace RawADODotNet.Web.ViewModel
 {
     public class EmployeeVM : BaseViewModel<EmployeeDto>
     {
-
         public int Id { get; set; }
 
         [Required]
